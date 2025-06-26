@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify - Web Player: Music for everyone</title>
+    <!-- NTailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #121212; /* Dark background similar to Spotify */
+            color: #b3b3b3; /* Light grey text */
+        }
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #282828;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #535353;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a7a7a7;
+        }
+    </style>
+</head>
+<body class="flex min-h-screen">
+    <!-- Navigation Bar (Left Sidebar) -->
+    <aside class="w-64 bg-black p-6 flex flex-col rounded-xl m-2 space-y-4">
+        <!-- Logo and Home Button (Re-arranged as requested) -->
+        <div class="mb-6 flex items-center space-x-3">
+            <!-- Spotify Logo -->
+            <a href="#" class="flex items-center rounded-lg p-2 hover:bg-gray-800 transition-colors">
+                <img src="https://i.pinimg.com/736x/67/43/7c/67437c129095108825ae95280fc58bdb.jpg" alt="Spotify Logo" class="h-10 w-auto">
+            </a>
+            <!-- Home Button with text - Increased size of SVG icon and padding -->
+            <a href="#" class="flex items-center text-white p-3 rounded-lg hover:bg-gray-800 transition-colors">
+                <svg class="h-6 w-6 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                </svg>
+                Home
+            </a>
+        </div>
+        <nav class="space-y-2">
+            <!-- Your Library link -->
+            <a href="#" class="flex items-center text-white py-2 px-3 rounded-lg hover:bg-gray-800 transition-colors">
+                Your Library
+            </a>
+        </nav>
+
+        <!-- Create Playlist Section -->
+        <div class="mt-6 p-4 bg-gray-900 rounded-lg">
+            <h3 class="text-white font-semibold mb-2">Create your first playlist</h3>
+            <p class="text-sm text-gray-400 mb-4">It's easy, we'll help you</p>
+            <button class="bg-white text-black font-bold py-2 px-4 rounded-full text-sm hover:scale-105 transition-transform duration-200">
+                Create playlist
+            </button>
+        </div>
+
+        <!-- Let's find some podcasts to follow -->
+        <div class="mt-4 p-4 bg-gray-900 rounded-lg">
+            <h3 class="text-white font-semibold mb-2">Let's find some podcasts to follow</h3>
+            <p class="text-sm text-gray-400 mb-4">We'll keep you updated on new episodes</p>
+            <button class="bg-white text-black font-bold py-2 px-4 rounded-full text-sm hover:scale-105 transition-transform duration-200">
+                Browse podcasts
+            </button>
+        </div>
+
+        <!-- Footer Links -->
+        <div class="mt-auto text-xs text-gray-500 space-y-2">
+            <a href="#" class="block hover:underline">Legal</a>
+            <a href="#" class="block hover:underline">Privacy Center</a>
+            <a href="#" class="block hover:underline">Privacy Policy</a>
+            <a href="#" class="block hover:underline">Cookies</a>
+            <a href="#" class="block hover:underline">About Ads</a>
+            <a href="#" class="block hover:underline">Accessibility</a>
+            <button class="mt-4 border border-gray-600 text-white py-1 px-3 rounded-full text-sm flex items-center hover:bg-gray-800 transition-colors">
+                <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 018.673 17.5l-2.121 2.121m1.414-1.414L10 14.28m0 0V9.886c0-2.336 1.89-4.226 4.226-4.226h.25C17.306 5.66 19.5 7.854 19.5 10.5c0 2.646-2.194 4.84-4.84 4.84H14.28l-1.414 1.414m-1.414 1.414L10 14.28M4 17l4 4m6-4l4-4"></path>
+                </svg>
+                English
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Area (Hero Screen and Song/Artist Lists) -->
+    <main class="flex-1 bg-gradient-to-b from-gray-900 to-black p-6 m-2 rounded-xl overflow-y-auto">
+        <!-- Top Navigation Bar -->
+        <header class="sticky top-0 z-10 flex justify-between items-center py-4 px-6 bg-gray-900 rounded-lg shadow-lg">
+            <div class="flex items-center space-x-4">
+                <!-- Back/Forward Buttons -->
+                <div class="flex items-center space-x-2">
+                    <button class="bg-black text-white p-2 rounded-full hover:bg-gray-700 transition-colors">
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/>
+                        </svg>
+                    </button>
+                    <button class="bg-black text-white p-2 rounded-full hover:bg-gray-700 transition-colors">
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/>
+                        </svg>
+                    </button>
+                </div>
+                <!-- Search Bar -->
+                <div class="relative flex items-center">
+                    <input type="text" placeholder="What do you want to play?" class="bg-gray-800 text-white rounded-full pl-10 pr-4 py-2 w-72 focus:outline-none focus:ring-2 focus:ring-green-500">
+                    <svg class="h-5 w-5 text-gray-400 absolute left-3" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                    <svg class="h-5 w-5 text-gray-400 absolute right-3" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 13H5v-2h14v2zm0-6H5V5h14v2zM5 15h14v2H5v-2z"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Right Side Navigation -->
+            <div class="flex items-center space-x-4">
+                <a href="#" class="text-white text-sm font-semibold hover:text-green-500 transition-colors">Premium</a>
+                <a href="#" class="text-white text-sm font-semibold hover:text-green-500 transition-colors">Support</a>
+                <a href="#" class="text-white text-sm font-semibold hover:text-green-500 transition-colors">Download</a>
+                <a href="#" class="text-white text-sm font-semibold flex items-center hover:text-green-500 transition-colors">
+                    <svg class="h-4 w-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm1 14h-2v-4H7V8h4V4h2v4h4v4h-4v4z"/>
+                    </svg>
+                    Install App
+                </a>
+                <span class="text-gray-600">|</span> <!-- Separator -->
+                <button class="bg-gray-700 text-white font-semibold py-2 px-5 rounded-full hover:scale-105 transition-transform duration-200">
+                    Sign up
+                </button>
+                <button class="bg-white text-black font-semibold py-2 px-5 rounded-full hover:scale-105 transition-transform duration-200">
+                    Log in
+                </button>
+            </div>
+        </header>
+
+        <!-- Sections: Trending Songs, Popular Artists -->
+        <section class="mb-8">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-white text-2xl font-bold">Trending songs</h2>
+                <a href="#" class="text-sm text-gray-400 hover:underline">Show all</a>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
+                <!-- Song Card 1 -->
+                <div class="song-card bg-gray-800 p-4 rounded-lg shadow-md hover:bg-gray-700 transition-colors group relative"
+                    data-song-title="Jugraafiya"
+                    data-song-artist="Nakash Aziz"
+                    data-song-src="https://www2.cs.uic.edu/~i101/samples/getting-started-with-sound.mp3"
+                    data-song-image="https://i.ytimg.com/vi/yyUodifWNxU/maxresdefault.jpg">
+                    <div class="pb-[100%] relative mb-4">
+                        <img src="https://i.ytimg.com/vi/yyUodifWNxU/maxresdefault.jpg" alt="Jugraafiya Song Art" class="absolute inset-0 w-full h-full rounded-lg shadow-md object-cover group-hover:scale-105 transition-transform duration-200">
+                    </div>
+                    <h3 class="text-white font-bold text-lg mb-1">Jugraafiya</h3>
+                    <p class="text-gray-400 text-sm"></p>
+                    <button class="play-button absolute bottom-6 right-6 bg-green-500 text-black p-3 rounded-full opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 transform translate-y-2">
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </button>
+                </div>
+                <!-- Song Card 2 -->
+                <div class="song-card bg-gray-800 p-4 rounded-lg shadow-md hover:bg-gray-700 transition-colors group relative"
+                    data-song-title="Raat Ke Shikari"
+                    data-song-artist="Shreya Ghoshal"
+                    data-song-src="https://www2.cs.uic.edu/~i101/samples/getting-started-with-sound.mp3"
+                    data-song-image="https://i.ytimg.com/vi/yYye8FCAaUI/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGGUgWyhKMA8=&rs=AOn4CLB-cmDnuGNn2wyKBRIfwHQmWW339Q">
+                    <div class="pb-[100%] relative mb-4">
+                        <img src="https://i.ytimg.com/vi/yYye8FCAaUI/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGGUgWyhKMA8=&rs=AOn4CLB-cmDnuGNn2wyKBRIfwHQmWW339Q" alt="Raat Ke Shikari Song Art" class="absolute inset-0 w-full h-full rounded-lg shadow-md object-cover group-hover:scale-105 transition-transform duration-200">
+                    </div>
+                    <h3 class="text-white font-bold text-lg mb-1">Raat Ke Shikari</h3>
+                    <p class="text-gray-400 text-sm"></p>
+                    <button class="play-button absolute bottom-6 right-6 bg-green-500 text-black p-3 rounded-full opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 transform translate-y-2">
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </button>
+                </div>
+                <!-- Song Card 3 -->
+                <div class="song-card bg-gray-800 p-4 rounded-lg shadow-md hover:bg-gray-700 transition-colors group relative"
+                    data-song-title="Aur Mohabbat Kitni Karu"
+                    data-song-artist="Atif Aslam"
+                    data-song-src="https://www2.cs.uic.edu/~i101/samples/getting-started-with-sound.mp3"
+                    data-song-image="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/42/14/c2/4214c212-67f3-67d9-ba1e-926c6ed769ea/8903431075840_cover.jpg/1200x630bf-60.jpg">
+                    <div class="pb-[100%] relative mb-4">
+                        <img src="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/42/14/c2/4214c212-67f3-67d9-ba1e-926c6ed769ea/8903431075840_cover.jpg/1200x630bf-60.jpg" alt="Aur Mohabbat Kitni Karu Song Art" class="absolute inset-0 w-full h-full rounded-lg shadow-md object-cover group-hover:scale-105 transition-transform duration-200">
+                    </div>
+                    <h3 class="text-white font-bold text-lg mb-1">Aur Mohabbat Kitni Karu</h3>
+                    <p class="text-gray-400 text-sm"></p>
+                    <button class="play-button absolute bottom-6 right-6 bg-green-500 text-black p-3 rounded-full opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 transform translate-y-2">
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </button>
+                </div>
+                <!-- Song Card 4 -->
+                <div class="song-card bg-gray-800 p-4 rounded-lg shadow-md hover:bg-gray-700 transition-colors group relative"
+                    data-song-title="Saiyaara"
+                    data-song-artist="Artist Name 5"
+                    data-song-src="https://www2.cs.uic.edu/~i101/samples/getting-started-with-sound.mp3"
+                    data-song-image="https://i.ytimg.com/vi/A5pSnIwbpaM/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLAws1AZaxXV6x2oOe-MIOll7xS_Qw">
+                    <div class="pb-[100%] relative mb-4">
+                        <img src="https://i.ytimg.com/vi/A5pSnIwbpaM/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLAws1AZaxXV6x2oOe-MIOll7xS_Qw" alt="Saiyaara Song Art" class="absolute inset-0 w-full h-full rounded-lg shadow-md object-cover group-hover:scale-105 transition-transform duration-200">
+                    </div>
+                    <h3 class="text-white font-bold text-lg mb-1">Saiyaara</h3>
+                    <p class="text-gray-400 text-sm"></p>
+                    <button class="play-button absolute bottom-6 right-6 bg-green-500 text-black p-3 rounded-full opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 transform translate-y-2">
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-8">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-white text-2xl font-bold">Popular artists</h2>
+                <a href="#" class="text-sm text-gray-400 hover:underline">Show all</a>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                <!-- Artist Card Example 1 (Neha Kakkar) -->
+                <div class="bg-gray-800 p-4 rounded-lg shadow-md hover:bg-gray-700 transition-colors text-center">
+                    <img src="https://www.tellyupdates.com/wp-content/uploads/2021/02/Neha-Kakkar.jpg" alt="Neha Kakkar" class="w-24 h-24 rounded-full mx-auto mb-4 shadow-md object-cover">
+                    <h3 class="text-white font-bold text-lg mb-1">Neha Kakkar</h3>
+                    <p class="text-gray-400 text-sm">Artist</p>
+                </div>
+                <!-- Artist Card Example 2 (Arijit Singh) -->
+                <div class="bg-gray-800 p-4 rounded-lg shadow-md hover:bg-gray-700 transition-colors text-center">
+                    <img src="https://images.indianexpress.com/2021/04/arijit-singh-1200.jpg" alt="Arijit Singh" class="w-24 h-24 rounded-full mx-auto mb-4 shadow-md object-cover">
+                    <h3 class="text-white font-bold text-lg mb-1">Arijit Singh</h3>
+                    <p class="text-gray-400 text-sm">Artist</p>
+                </div>
+                <!-- Artist Card Example 3 (Shreya Ghoshal) -->
+                <div class="bg-gray-800 p-4 rounded-lg shadow-md hover:bg-gray-700 transition-colors text-center">
+                    <img src="https://th.bing.com/th/id/OIP.vVvve63CHN1D4ubjvvxvbQHaFj?w=240&h=181&c=7&r=0&o=5&pid=1.7" alt="Shreya Ghoshal" class="w-24 h-24 rounded-full mx-auto mb-4 shadow-md object-cover">
+                    <h3 class="text-white font-bold text-lg mb-1">Shreya Ghoshal</h3>
+                    <p class="text-gray-400 text-sm">Artist</p>
+                </div>
+                <!-- Artist Card Example 4 (Atif Aslam) -->
+                <div class="bg-gray-800 p-4 rounded-lg shadow-md hover:bg-gray-700 transition-colors text-center">
+                    <img src="https://i.pinimg.com/736x/3d/e3/90/3de3903d6ac6efa8a203167f6f3f4624.jpg" alt="Atif Aslam" class="w-24 h-24 rounded-full mx-auto mb-4 shadow-md object-cover">
+                    <h3 class="text-white font-bold text-lg mb-1">Atif Aslam</h3>
+                    <p class="text-gray-400 text-sm">Artist</p>
+                </div>
+                <!-- Artist Card Example 5 (Tulsi Kumar) -->
+                <div class="bg-gray-800 p-4 rounded-lg shadow-md hover:bg-gray-700 transition-colors text-center">
+                    <img src="https://abtc.ng/wp-content/uploads/2022/12/Tulsi-Kumar.webp" alt="Tulsi Kumar" class="w-24 h-24 rounded-full mx-auto mb-4 shadow-md object-cover">
+                    <h3 class="text-white font-bold text-lg mb-1">Tulsi Kumar</h3>
+                    <p class="text-gray-400 text-sm">Artist</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Fixed Bottom Playback Bar -->
+    <footer class="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 flex items-center justify-between z-20">
+        <!-- Current Song Info -->
+        <div class="flex items-center space-x-3 w-1/4">
+            <img id="footer-song-image" src="https://placehold.co/50x50/282828/ffffff?text=Song" alt="Current Song" class="h-12 w-12 rounded-md">
+            <div>
+                <p id="footer-song-title" class="text-sm font-semibold">Current Song Title</p>
+                <p id="footer-song-artist" class="text-xs text-gray-400">Current Artist</p>
+            </div>
+            <button class="text-gray-400 hover:text-white transition-colors">
+                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 4.242c-2.43 0-4.402 1.972-4.402 4.402 0 4.047 5.702 10.638 4.402 11.156 1.302-.518 4.402-7.109 4.402-11.156C16.402 6.214 14.43 4.242 12 4.242z"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Playback Controls -->
+        <div class="flex flex-col items-center w-2/4">
+            <div class="flex items-center space-x-6 mb-2">
+                <button class="text-gray-400 hover:text-white transition-colors">
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6 18V6H8v12H6zm3.5-6l5.19 3.5L13.5 18V6l-4.5 3.5V12z"/>
+                    </svg>
+                </button>
+                <button class="text-gray-400 hover:text-white transition-colors">
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6 18V6H8v12H6zm3.5-6l5.19 3.5L13.5 18V6l-4.5 3.5V12z" transform="rotate(180 12 12)"/>
+                    </svg>
+                </button>
+                <button id="main-play-pause-button" class="bg-white text-black p-3 rounded-full hover:scale-105 transition-transform duration-200">
+                    <svg id="play-icon" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                    <svg id="pause-icon" class="h-6 w-6 hidden" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                    </svg>
+                </button>
+                <button class="text-gray-400 hover:text-white transition-colors">
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6 18V6H8v12H6zm3.5-6l5.19 3.5L13.5 18V6l-4.5 3.5V12z" transform="rotate(180 12 12)"/>
+                    </svg>
+                </button>
+                <button class="text-gray-400 hover:text-white transition-colors">
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 12h-2v4h2v-4zM7 12h2v4H7v-4zm-2 4c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2v-4c0-1.1-.9-2-2-2H7c-1.1 0-2 .9-2 2v4z"/>
+                    </svg>
+                </button>
+            </div>
+            <!-- Progress Bar -->
+            <div class="flex items-center w-full space-x-2">
+                <span id="current-time" class="text-xs text-gray-400">0:00</span>
+                <div id="progress-bar-container" class="flex-1 h-1 bg-gray-700 rounded-full cursor-pointer">
+                    <div id="progress-bar" class="h-full bg-green-500 rounded-full" style="width: 0%;"></div>
+                </div>
+                <span id="total-duration" class="text-xs text-gray-400">0:00</span>
+            </div>
+        </div>
+
+        <!-- Volume and Other Controls -->
+        <div class="flex items-center space-x-3 w-1/4 justify-end">
+            <button class="text-gray-400 hover:text-white transition-colors">
+                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M4 18h2v-2H4v2zM4 6v2h2V6H4zm0 7h2v-2H4v2zm4 5h2V6H8v12zm4 0h2V6h-2v12zm4 0h2V6h-2v12z"/>
+                </svg>
+            </button>
+            <button class="text-gray-400 hover:text-white transition-colors">
+                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 3v18l8-9z"/>
+                </svg>
+            </button>
+            <div class="flex items-center space-x-2">
+                <button id="volume-icon-button" class="text-gray-400 hover:text-white transition-colors">
+                    <svg id="volume-high-icon" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                    </svg>
+                    <svg id="volume-muted-icon" class="h-5 w-5 hidden" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .91-.21 1.77-.59 2.58l1.42 1.42c.86-1.92 1.37-4.14 1.37-6H19v2h.5c0-.91-.21-1.77-.59-2.58l-1.42-1.42c-.86 1.92-1.37 4.14-1.37 6zM4.27 3L3 4.27l4.99 4.99L7 9H3v6h4l5 5V9.27l8.73-8.73L21.73 3 19 5.73 4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+                    </svg>
+                </button>
+                <div id="volume-bar-container" class="w-24 h-1 bg-gray-700 rounded-full cursor-pointer">
+                    <div id="volume-bar" class="h-full bg-green-500 rounded-full" style="width: 70%;"></div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <audio id="global-audio-player" src=""></audio>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const audioPlayer = document.getElementById('global-audio-player');
+            const mainPlayPauseButton = document.getElementById('main-play-pause-button');
+            const playIcon = document.getElementById('play-icon');
+            const pauseIcon = document.getElementById('pause-icon');
+            const progressBar = document.getElementById('progress-bar');
+            const progressBarContainer = document.getElementById('progress-bar-container');
+            const currentTimeSpan = document.getElementById('current-time');
+            const totalDurationSpan = document.getElementById('total-duration');
+            const footerSongImage = document.getElementById('footer-song-image');
+            const footerSongTitle = document.getElementById('footer-song-title');
+            const footerSongArtist = document.getElementById('footer-song-artist');
+            const volumeBar = document.getElementById('volume-bar');
+            const volumeBarContainer = document.getElementById('volume-bar-container');
+            const volumeIconButton = document.getElementById('volume-icon-button');
+            const volumeHighIcon = document.getElementById('volume-high-icon');
+            const volumeMutedIcon = document.getElementById('volume-muted-icon');
+
+            let currentPlayingSong = null;
+
+            // Function to format time for display
+            function formatTime(seconds) {
+                const minutes = Math.floor(seconds / 60);
+                const remainingSeconds = Math.floor(seconds % 60);
+                return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+            }
+
+            // Update progress bar and time display
+            audioPlayer.addEventListener('timeupdate', () => {
+                const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+                progressBar.style.width = `${progress}%`;
+                currentTimeSpan.textContent = formatTime(audioPlayer.currentTime);
+            });
+
+            // Set total duration when metadata is loaded
+            audioPlayer.addEventListener('loadedmetadata', () => {
+                totalDurationSpan.textContent = formatTime(audioPlayer.duration);
+            });
+
+            // Handle play/pause toggle for the main player
+            mainPlayPauseButton.addEventListener('click', () => {
+                if (audioPlayer.paused) {
+                    audioPlayer.play();
+                } else {
+                    audioPlayer.pause();
+                }
+            });
+
+            // Update play/pause icons
+            audioPlayer.addEventListener('play', () => {
+                playIcon.classList.add('hidden');
+                pauseIcon.classList.remove('hidden');
+            });
+
+            audioPlayer.addEventListener('pause', () => {
+                playIcon.classList.remove('hidden');
+                pauseIcon.classList.add('hidden');
+            });
+
+            audioPlayer.addEventListener('ended', () => {
+                playIcon.classList.remove('hidden');
+                pauseIcon.classList.add('hidden');
+                progressBar.style.width = '0%';
+                currentTimeSpan.textContent = '0:00';
+            });
+
+            // Seek functionality for the progress bar
+            progressBarContainer.addEventListener('click', (e) => {
+                const rect = progressBarContainer.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+                const percentage = clickX / rect.width;
+                audioPlayer.currentTime = audioPlayer.duration * percentage;
+            });
+
+            // Volume control
+            volumeBarContainer.addEventListener('click', (e) => {
+                const rect = volumeBarContainer.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+                const percentage = clickX / rect.width;
+                audioPlayer.volume = percentage;
+                volumeBar.style.width = `${percentage * 100}%`;
+                if (percentage === 0) {
+                    volumeHighIcon.classList.add('hidden');
+                    volumeMutedIcon.classList.remove('hidden');
+                } else {
+                    volumeHighIcon.classList.remove('hidden');
+                    volumeMutedIcon.classList.add('hidden');
+                }
+            });
+
+            // Mute/Unmute functionality
+            volumeIconButton.addEventListener('click', () => {
+                if (audioPlayer.muted) {
+                    audioPlayer.muted = false;
+                    volumeHighIcon.classList.remove('hidden');
+                    volumeMutedIcon.classList.add('hidden');
+                    volumeBar.style.width = `${audioPlayer.volume * 100}%`;
+                } else {
+                    audioPlayer.muted = true;
+                    volumeHighIcon.classList.add('hidden');
+                    volumeMutedIcon.classList.remove('hidden');
+                    volumeBar.style.width = '0%';
+                }
+            });
+
+            // Play song from card click
+            document.querySelectorAll('.song-card .play-button').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    // Stop propagation to prevent card hover effect issues
+                    e.stopPropagation();
+
+                    const songCard = e.currentTarget.closest('.song-card');
+                    const songTitle = songCard.dataset.songTitle;
+                    const songArtist = songCard.dataset.songArtist;
+                    const songSrc = songCard.dataset.songSrc;
+                    const songImage = songCard.dataset.songImage;
+
+                    // Pause current song if playing
+                    if (currentPlayingSong && currentPlayingSong.src === songSrc && !audioPlayer.paused) {
+                        audioPlayer.pause();
+                        // Reset currentPlayingSong to null if paused by clicking the same button
+                        currentPlayingSong = null;
+                        return; // Exit as we just paused the current song
+                    } else if (currentPlayingSong && currentPlayingSong.src !== songSrc && !audioPlayer.paused) {
+                        // If a different song is playing, pause it before playing the new one
+                        audioPlayer.pause();
+                    }
+
+
+                    // Update footer info
+                    footerSongImage.src = songImage;
+                    footerSongTitle.textContent = songTitle;
+                    footerSongArtist.textContent = songArtist;
+
+                    // Load and play new song
+                    audioPlayer.src = songSrc;
+                    audioPlayer.play();
+                    currentPlayingSong = {
+                        title: songTitle,
+                        artist: songArtist,
+                        src: songSrc,
+                        image: songImage
+                    };
+                });
+            });
+
+            // Initialize volume bar width based on default volume
+            volumeBar.style.width = `${audioPlayer.volume * 100}%`;
+        });
+    </script>
+</body>
+</html>
